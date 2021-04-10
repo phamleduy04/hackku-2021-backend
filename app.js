@@ -37,4 +37,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+const { executeScraper } = require('./instances');
+const ms = require('ms');
+executeScraper();
+
+setInterval(executeScraper, ms('10m'));
+
 module.exports = app;
