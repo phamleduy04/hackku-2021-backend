@@ -10,7 +10,6 @@ router.get('/', async (req, res) => {
 router.get('/:county', async (req, res) => {
     const data = await get('jhucsse');
     const { county } = req.params;
-    console.log(req.params);
     const countryData = {};
     countryData[county] = getCounty(data, county);
     if (countryData[county].length === 0) delete countryData[county];
