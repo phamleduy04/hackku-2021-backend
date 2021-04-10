@@ -35,7 +35,7 @@ const extractData = (loc) => ({
 const jhudata = async (key) => {
     let response;
     try {
-        const dateString = moment().subtract(1, 'days').format('MM-DD-YYYY');
+        const dateString = moment().tz('America/Denver').subtract(1, 'days').format('MM-DD-YYYY');
         log.info(`USING ${dateString}.csv`);
         response = await axios.get(`${base}${dateString}.csv`);
         const parsed = await csv({
