@@ -32,7 +32,7 @@ const extractData = (loc) => ({
  * @param { string } keys
  */
 
-const jhudata = async (key) => {
+const jhudata = async () => {
     let response;
     try {
         const dateString = moment().tz('America/Denver').subtract(1, 'days').format('MM-DD-YYYY');
@@ -44,7 +44,7 @@ const jhudata = async (key) => {
         }).fromString(response.data);
 
         const result = parsed.splice(1).map(extractData);
-        await set(key, result);
+        await set('jhucsse', result);
         log.info(`Updated JHU: ${result.length} locations`);
     }
     catch(err) {
