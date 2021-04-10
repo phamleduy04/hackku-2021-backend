@@ -2,7 +2,7 @@ const axios = require('axios');
 const csv = require('csvtojson');
 const log = require('../utils/log');
 const base = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/';
-const moment = require('moment');
+const moment = require('moment-timezone');
 const { set } = require('../database');
 
 /**
