@@ -14,6 +14,6 @@ module.exports = {
             getUSState(), // DatabaseID: USToday/USYesterday
             processHistorical(), // DatabaseID: jhuHistorical
         ]);
-        log.info('Finished JHU scraping!');
+        log.info('Finished all scrapping');
     },
 };
