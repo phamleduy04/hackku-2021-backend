@@ -23,9 +23,9 @@ router.get('/countries/:countryname', async (req, res) => {
     const { countryname } = req.params;
     let data = await get(yesterday ? 'womYesterday' : 'womToday');
     data = data.filter(el => el.country.toLowerCase() !== 'world').map(fixApostrophe).map(el => el);
-    data = splitQuery(countryname).map(country => getWOHData(data, country)).filter(el => el).map(el => el);
-    if (data.length > 0) return res.status(200).json(data.length === 1 ? data[0] : data);
-    else res.status(404).send({ message: 'not found!' });
+    data = getWOHData(data, countryname);
+    if (data) return res.status(200).json(data);
+    return res.status(404).send({ message: 'not found!' });
 });
 
 
@@ -41,9 +41,9 @@ router.get('/state/:statename', async (req, res) => {
     const { yesterday = undefined } = req.query;
     const { statename } = req.params;
     const data = await get(yesterday ? 'USYesterday' : 'USToday');
-    const stateData = splitQuery(statename).map(el => data.find(state => el.toLowerCase() === state.state.toLowerCase())).filter(el => el).map(state => state);
-    if (stateData.length > 0) return res.status(200).json(stateData.length === 1 ? stateData[0] : stateData);
-    else return res.status(404).json({ message: 'not found!' });
+    const stateData = data.find(el => el.state.toLowerCase() === statename.toLowerCase());
+    if (stateData) return res.status(200).json(stateData);
+    return res.status(404).json({ message: 'not found!' });
 });
 
 
@@ -61,10 +61,6 @@ async function getAllData(key) {
 function fixApostrophe(country) {
     country.country = country.country.replace(/"/g, '\'');
 	return country;
-}
-
-function splitQuery(query) {
-    return query.indexOf('|') === -1 ? query.split(',') : query.split('|');
 }
 
 function getWOHData(data, nameParam) {
